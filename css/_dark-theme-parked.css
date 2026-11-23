@@ -1,0 +1,48 @@
+/* ============================================
+   DARK THEME — PARKED, NOT IN USE
+   This file is not linked from any page.
+   The site ships light-only for now.
+
+   To bring dark mode back later:
+   1. Settle the background color (see note below).
+   2. Paste the token blocks into css/style.css
+      after the :root block.
+   3. Restore the toggle button in each page's nav,
+      the pre-paint snippet in each <head>, and the
+      toggleTheme() function in js/main.js
+      (all in git history from the July 2026 rebuild).
+
+   OPEN QUESTION — the background:
+   #1C1814 read too red-brown. Candidates to try:
+   - #1A1918  (the old site's neutral warm black)
+   - #191A1B  (cool neutral)
+   - #15171A  (deeper, slightly blue)
+   The rose accent (#D9908C) was tuned for the warm
+   background; re-check contrast if the bg changes.
+   Starfield was cut entirely — do not restore.
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1C1814;
+    --paper-2: #262019;
+    --ink: #ECE4D6;
+    --ink-soft: #B7AE9F;
+    --slate: #9FB0C0;
+    --accent: #D9908C;
+    --accent-ink: #1C1814;
+    --rule: rgba(236, 228, 214, 0.18);
+    --rule-strong: rgba(236, 228, 214, 0.6);
+  }
+}
+[data-theme="dark"] {
+  --paper: #1C1814;
+  --paper-2: #262019;
+  --ink: #ECE4D6;
+  --ink-soft: #B7AE9F;
+  --slate: #9FB0C0;
+  --accent: #D9908C;
+  --accent-ink: #1C1814;
+  --rule: rgba(236, 228, 214, 0.18);
+  --rule-strong: rgba(236, 228, 214, 0.6);
+}

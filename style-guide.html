@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Style Guide — Anika Harden</title>
+  <meta name="description" content="The design system behind this site: typography, color, spacing, and components.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://ahrdn.com/style-guide.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anika Harden">
+  <meta property="og:title" content="Style Guide — Anika Harden">
+  <meta property="og:description" content="The design system behind this site: typography, color, spacing, and components.">
+  <meta property="og:url" content="https://ahrdn.com/style-guide.html">
+  <meta property="og:image" content="https://ahrdn.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/libre-franklin-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Style-guide-only presentation styles */
+    .sg-section { padding: var(--s5) 0; border-bottom: 1px solid var(--rule); }
+    .sg-desc { color: var(--ink-soft); max-width: 620px; margin-bottom: var(--s3); }
+    .specimen { padding: var(--s3) 0; border-bottom: 1px solid var(--rule); }
+    .specimen:last-child { border-bottom: none; }
+    .specimen__meta { font-size: var(--tx-xs); color: var(--slate); margin-top: var(--s1); }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--s2); margin-bottom: var(--s3); }
+    .swatch__chip { height: 56px; border: 1px solid var(--rule); }
+    .swatch__name { font-size: var(--tx-sm); font-weight: 500; margin-top: 6px; }
+    .swatch__value { font-size: var(--tx-xs); color: var(--slate); }
+    .sg-table { width: 100%; border-collapse: collapse; font-size: var(--tx-sm); }
+    .sg-table th, .sg-table td { text-align: left; padding: 10px 16px 10px 0; border-bottom: 1px solid var(--rule); }
+    .sg-table th { font-weight: 600; font-size: var(--tx-xs); color: var(--slate); }
+    .sg-table td { color: var(--ink-soft); }
+    .sg-note { font-size: var(--tx-sm); color: var(--slate); font-style: italic; }
+    .built-with { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1) var(--s3); }
+    .built-with p { font-size: var(--tx-sm); color: var(--ink-soft); margin: 0; }
+    .built-with strong { color: var(--ink); font-weight: 500; }
+    @media (max-width: 560px) { .built-with { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="masthead-wrap" id="masthead-wrap">
+    <div class="container">
+      <nav class="masthead" aria-label="Main navigation">
+        <a href="index.html" class="masthead__name wordmark" aria-label="Anika Harden, home"><span aria-hidden="true">A</span><span class="drop" aria-hidden="true"><span>nika&nbsp;</span></span><span aria-hidden="true">H</span><span class="drop" aria-hidden="true"><span>a</span></span><span aria-hidden="true">rd</span><span class="drop" aria-hidden="true"><span>e</span></span><span aria-hidden="true">n</span></a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav(this)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        </button>
+        <ul class="masthead__links" id="nav-links">
+          <li><a href="index.html">Work</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="work-with-me.html" class="nav-cta">Work with me</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <main id="main">
+    <div class="container">
+
+      <section class="page-hero">
+        <h1>The design system behind this site</h1>
+        <p class="page-hero__sub">One stylesheet, tokens at the top. Everything below is built from it.</p>
+      </section>
+
+      <!-- Typography -->
+      <section class="sg-section">
+        <p class="section-label">Typography</p>
+        <p class="sg-desc">Newsreader for display — a news serif with real italics — and Libre Franklin for text, a sans in the Franklin Gothic newspaper lineage. Stats are set with oldstyle figures.</p>
+
+        <div class="specimen">
+          <p style="font-family: var(--serif); font-weight: 500; font-size: clamp(2.4rem, 6.5vw, 3.4rem); line-height: 1.15; letter-spacing: -0.015em;">Headline, set large</p>
+          <p class="specimen__meta">Newsreader &middot; 500 &middot; clamp(2.4rem, 6.5vw, 3.4rem) &middot; page and case-study titles</p>
+        </div>
+        <div class="specimen">
+          <p style="font-family: var(--serif); font-style: italic; font-size: 1.3rem;">An italic serif section label</p>
+          <p class="specimen__meta">Newsreader italic &middot; 400 &middot; 1.3rem &middot; section labels, kickers, decision heads</p>
+        </div>
+        <div class="specimen">
+          <p>Body text set in Libre Franklin at 17px with a 1.65 line height, sized for reading rather than for fitting more on the screen.</p>
+          <p class="specimen__meta">Libre Franklin &middot; 400 &middot; 1.0625rem &middot; body</p>
+        </div>
+        <div class="specimen">
+          <p class="folio"><em>Washington, DC</em> &nbsp;&middot;&nbsp; A folio line &nbsp;&middot;&nbsp; 2026</p>
+          <p class="specimen__meta">Franklin 13px + Newsreader italic &middot; folios, slugs, captions — nothing on the site is set smaller than 13px</p>
+        </div>
+      </section>
+
+      <!-- Color -->
+      <section class="sg-section">
+        <p class="section-label">Color</p>
+        <p class="sg-desc">Ivory, ink, evergreen, slate. Every text/background pair meets WCAG AA for normal-size text; most meet AAA.</p>
+
+        <div class="swatches">
+          <div class="swatch"><div class="swatch__chip" style="background: #F7F4EC;"></div><p class="swatch__name">Paper</p><p class="swatch__value">#F7F4EC</p></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #F0EBDD;"></div><p class="swatch__name">Paper 2</p><p class="swatch__value">#F0EBDD</p></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #211E1A;"></div><p class="swatch__name">Ink</p><p class="swatch__value">#211E1A</p></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #56514A;"></div><p class="swatch__name">Ink soft</p><p class="swatch__value">#56514A</p></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #205C40;"></div><p class="swatch__name">Evergreen</p><p class="swatch__value">#205C40</p></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #5A6472;"></div><p class="swatch__name">Slate</p><p class="swatch__value">#5A6472</p></div>
+        </div>
+
+        <table class="sg-table">
+          <thead><tr><th>Pair</th><th>Contrast</th><th>WCAG</th></tr></thead>
+          <tbody>
+            <tr><td>Ink on paper</td><td>15.1 : 1</td><td>AAA</td></tr>
+            <tr><td>Ink soft on paper</td><td>7.2 : 1</td><td>AAA</td></tr>
+            <tr><td>Evergreen on paper</td><td>7.2 : 1</td><td>AAA</td></tr>
+            <tr><td>Slate on paper</td><td>5.5 : 1</td><td>AA</td></tr>
+            <tr><td>Paper on evergreen (buttons)</td><td>7.2 : 1</td><td>AAA</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Components -->
+      <section class="sg-section">
+        <p class="section-label">Components</p>
+        <p class="sg-desc">Rules and typography do the structural work. No pill tags, no colored stat cards, no numbered chips.</p>
+
+        <p class="sg-note" style="margin-bottom: var(--s2);">The agate — stats in a rule-bounded box score:</p>
+        <div class="agate" style="margin-bottom: var(--s4);">
+          <div class="agate__stat"><span class="agate__value">~935K</span><span class="agate__label">Annual users</span></div>
+          <div class="agate__stat"><span class="agate__value">11 years</span><span class="agate__label">In web + product</span></div>
+        </div>
+
+        <p class="sg-note" style="margin-bottom: var(--s2);">The story listing — projects as rule-separated entries:</p>
+        <div class="stories" style="margin-bottom: var(--s4);">
+          <a href="#" class="story" style="border-top: 1px solid var(--rule);">
+            <p class="story__kicker">Example kicker</p>
+            <h2 class="story__title">A project title in Newsreader</h2>
+            <p class="story__desc">A one-sentence description of the work in Franklin, secondary ink.</p>
+            <div class="tag-row"><span class="tag">Tag</span><span class="tag">Another tag</span><span class="tag">2019&ndash;2026</span></div>
+          </a>
+        </div>
+
+        <p class="sg-note" style="margin-bottom: var(--s2);">The aside — a bordered sidebar for reflections and notes:</p>
+        <div class="aside" style="margin-bottom: var(--s4); margin-top: 0;">
+          <p class="aside__label">Aside label</p>
+          <p>Sidebar text for reflections, current status, and editorial notes that sit beside the main narrative.</p>
+        </div>
+
+        <p class="sg-note" style="margin-bottom: var(--s2);">Buttons:</p>
+        <p><a href="#" class="btn">Secondary</a>&nbsp;&nbsp;<a href="#" class="btn btn--primary">Primary</a></p>
+      </section>
+
+      <!-- Design decisions -->
+      <section class="sg-section">
+        <p class="section-label">Design decisions</p>
+        <div class="entry" style="margin-top: var(--s3);">
+          <h3>Typography over boxes</h3>
+          <p>Earlier drafts of this site used cards, tags, and tinted panels to create structure. This version uses rules, italics, and scale instead — the way a magazine does. Fewer containers, more hierarchy.</p>
+        </div>
+        <div class="entry">
+          <h3>Legibility as a requirement, not a preference</h3>
+          <p>Body text is 17px, nothing is set below 13px, and every color pair was checked against WCAG before it entered the palette. The contrast table above is generated from the actual token values.</p>
+        </div>
+        <div class="entry">
+          <h3>Tags as section markers</h3>
+          <p>Project tags are square-ruled markers in Franklin — the way a paper marks its sections — rather than rounded, tinted pills. Same scannability, different lineage.</p>
+        </div>
+      </section>
+
+      <!-- Built with -->
+      <section class="sg-section" style="border-bottom: none;">
+        <p class="section-label">Built with</p>
+        <div class="built-with">
+          <p><strong>Languages:</strong> HTML5, CSS3</p>
+          <p><strong>CSS approach:</strong> One stylesheet, custom properties</p>
+          <p><strong>Frameworks:</strong> None</p>
+          <p><strong>Dependencies:</strong> None</p>
+          <p><strong>Fonts:</strong> Newsreader + Libre Franklin, self-hosted</p>
+          <p><strong>JavaScript:</strong> ~130 lines of vanilla JS, no libraries</p>
+          <p><strong>Hosting:</strong> Static, on GitHub Pages</p>
+          <p><strong>Version control:</strong> Git</p>
+        </div>
+        <p class="sg-note" style="margin-top: var(--s3);">No build step. No bundler. No package.json. Open the source and see for yourself.</p>
+      </section>
+
+      <footer class="site-footer" style="border-top: none; margin-top: var(--s4);">
+        <div class="site-footer__bottom" style="border-top: 1px solid var(--rule);">
+          <span>Built with plain HTML + CSS</span>
+          <span>&copy; 2026 Anika Harden</span>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Back to top">&uarr;</button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

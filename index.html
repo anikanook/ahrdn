@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.className += ' js';</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anika Harden — Product Manager</title>
+  <meta name="description" content="Product manager with a web development background. I build and ship digital products that earn their keep.">
+  <link rel="canonical" href="https://ahrdn.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anika Harden">
+  <meta property="og:title" content="Anika Harden — Product Manager">
+  <meta property="og:description" content="Product manager with a web development background. I build and ship digital products that earn their keep.">
+  <meta property="og:url" content="https://ahrdn.com/">
+  <meta property="og:image" content="https://ahrdn.com/images/og/og-home.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/libre-franklin-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    /* Hide the status banner pre-paint if dismissed this session */
+    (function () {
+      try {
+        if (sessionStorage.getItem('banner-dismissed') === 'true') document.documentElement.classList.add('banner-dismissed');
+        /* Arrival animation: once per visit, never with reduce motion */
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && sessionStorage.getItem('intro-played') !== 'true') {
+          document.documentElement.classList.add('intro');
+          sessionStorage.setItem('intro-played', 'true');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="masthead-wrap" id="masthead-wrap">
+    <div class="status-banner" id="status-banner">
+      Exploring my next full-time product management role — <a href="about.html">learn more</a> or <a href="mailto:hello@ahrdn.com">get in touch</a>.
+      <button class="status-banner__close" onclick="dismissBanner()" aria-label="Dismiss">&times;</button>
+    </div>
+    <div class="container">
+      <nav class="masthead" aria-label="Main navigation">
+        <a href="index.html" class="masthead__name wordmark" aria-label="Anika Harden, home"><span aria-hidden="true">A</span><span class="drop" aria-hidden="true"><span>nika&nbsp;</span></span><span aria-hidden="true">H</span><span class="drop" aria-hidden="true"><span>a</span></span><span aria-hidden="true">rd</span><span class="drop" aria-hidden="true"><span>e</span></span><span aria-hidden="true">n</span></a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav(this)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        </button>
+        <ul class="masthead__links" id="nav-links">
+          <li><a href="index.html" class="active">Work</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="work-with-me.html" class="nav-cta">Work with me</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <main id="main">
+    <div class="container">
+
+      <section class="hero">
+        <p class="hero__kicker">Product manager &middot; Front-end development background</p>
+        <h1>I build and ship digital products that <span class="mark">earn their keep.</span></h1>
+        <p class="hero__intro">For nearly seven years, I was the only product manager and on-site web developer at Green America, responsible for five web properties. I set priorities, made technical decisions, and took products from planning through launch.</p>
+        <p class="folio"><em>Washington, DC</em></p>
+      </section>
+
+      <p class="section-label">At a glance</p>
+      <div class="agate reveal">
+        <div class="agate__stat">
+          <span class="agate__value">935K</span>
+          <span class="agate__label">Annual users on greenamerica.org</span>
+        </div>
+        <div class="agate__stat">
+          <span class="agate__value">$650K+</span>
+          <span class="agate__label">Tracked online revenue, mid-2023&ndash;May 2026</span>
+        </div>
+        <div class="agate__stat">
+          <span class="agate__value">3,000+</span>
+          <span class="agate__label">Banks and credit unions in a directory I launched</span>
+        </div>
+      </div>
+
+      <section class="reveal">
+        <p class="section-label">Selected work</p>
+        <div class="stories">
+
+          <a href="work/get-a-better-bank.html" class="story story--art">
+            <div class="story__text">
+            <p class="story__kicker">From concept to launch</p>
+            <h2 class="story__title" style="view-transition-name: cs-gabb">Get a Better Bank</h2>
+            <p class="story__desc">Led the product from concept through launch. I made the case for a vendor whose quote was three times our budget because the proposed build would cost less to run and could grow without a rebuild. We launched on schedule in April 2025.</p>
+            <div class="tag-row"><span class="tag">Product management</span><span class="tag">Vendor selection</span><span class="tag">17,000+ locations</span></div>
+            </div>
+            <div class="story__art" aria-hidden="true"><svg viewBox="0 0 200 130" focusable="false"><g class="th-old"><rect class="th-frame" x="8" y="10" width="104" height="110" rx="4"/><rect class="th-site" x="14" y="18" width="92" height="96" rx="3"/></g><g class="th-window"><rect class="th-win" x="40" y="8" width="152" height="114" rx="5"/><line class="th-bar" x1="40" y1="20" x2="192" y2="20"/><circle class="th-dot" cx="48" cy="14" r="2"/><circle class="th-dot" cx="55" cy="14" r="2"/><circle class="th-dot" cx="62" cy="14" r="2"/></g><g class="th-card"><g transform="translate(18 30)"><rect class="th-map" width="84" height="56" rx="3"/><path class="th-line" d="M0 20 H84 M0 40 H84 M28 0 V56 M56 0 V56" style="fill:none;stroke:var(--rule)"/><circle class="th-pin" cx="29.7" cy="13.5" r="2.4"/><circle class="th-pin th-pin--cu" cx="52.5" cy="10.2" r="2.4"/><circle class="th-pin" cx="44.5" cy="22.4" r="2.4"/><circle class="th-pin" cx="11.2" cy="28.3" r="2.4"/><circle class="th-pin th-pin--cu" cx="12.1" cy="11.0" r="2.4"/><circle class="th-pin" cx="36.7" cy="41.6" r="2.4"/><circle class="th-pin th-pin--ghost" cx="50.9" cy="46.6" r="2.4"/><circle class="th-pin th-pin--ghost th-pin--cu" cx="75.1" cy="9.1" r="2.4"/><circle class="th-pin th-pin--ghost" cx="66.9" cy="19.2" r="2.4"/><circle class="th-pin th-pin--ghost" cx="28.7" cy="41.2" r="2.4"/><circle class="th-pin th-pin--ghost th-pin--cu" cx="19.8" cy="31.4" r="2.4"/><circle class="th-pin th-pin--ghost" cx="54.6" cy="25.0" r="2.4"/><circle class="th-pin th-pin--ghost" cx="29.1" cy="31.6" r="2.4"/><circle class="th-pin th-pin--ghost th-pin--cu" cx="62.5" cy="36.3" r="2.4"/><circle class="th-pin th-pin--ghost" cx="65.7" cy="46.5" r="2.4"/><circle class="th-pin th-pin--ghost" cx="11.4" cy="36.4" r="2.4"/></g></g></svg></div>
+          </a>
+
+          <a href="work/green-america.html" class="story story--art">
+            <div class="story__text">
+            <p class="story__kicker">Platform ownership</p>
+            <h2 class="story__title" style="view-transition-name: cs-ga">Green America</h2>
+            <p class="story__desc">Managed a website serving roughly 935,000 annual users while supporting four other web properties. I set priorities across 15+ stakeholders, used AI tools to bring development work in-house, and led planning for a major redesign.</p>
+            <div class="tag-row"><span class="tag">Product management</span><span class="tag">Redesign planning</span><span class="tag">2019&ndash;2026</span></div>
+            </div>
+            <div class="story__art" aria-hidden="true"><svg viewBox="0 0 200 130" focusable="false"><rect class="th-frame" x="8" y="10" width="116" height="110" rx="4"/><rect class="th-site" x="16" y="20" width="100" height="58" rx="3"/><rect class="th-line" x="22" y="28" width="46" height="4"/><rect class="th-site" x="16" y="86" width="100" height="26" rx="3"/><rect class="th-line" x="22" y="94" width="58" height="4"/><path class="th-link" d="M116 56 C 130 56 132 38 144 38"/><path class="th-link" d="M116 56 C 130 56 132 92 144 92"/><g class="th-move th-move--a"><rect class="th-chip" x="22" y="48" width="42" height="16" rx="8"/></g><g class="th-move th-move--b"><rect class="th-chip" x="70" y="48" width="42" height="16" rx="8"/></g></svg></div>
+          </a>
+
+          <a href="work/studio-acting.html" class="story">
+            <p class="story__kicker">Board and advisory work</p>
+            <h2 class="story__title" style="view-transition-name: cs-studio">Studio Acting Conservatory</h2>
+            <p class="story__desc">As a board member, I advised on a $60,000 website rebuild that included redesigning the student registration experience.</p>
+            <div class="tag-row"><span class="tag">Board governance</span><span class="tag">Website advisory</span><span class="tag">Registration redesign</span></div>
+          </a>
+
+          <a href="work/pbgc.html" class="story">
+            <p class="story__kicker">Federal web development</p>
+            <h2 class="story__title" style="view-transition-name: cs-pbgc">PBGC.gov</h2>
+            <p class="story__desc">Front-end developer on a federal website serving pension beneficiaries nationwide. My work included the redesign launched in May 2017, with improved search, simpler navigation, and a mobile-friendly experience.</p>
+            <div class="tag-row"><span class="tag">Front-end development</span><span class="tag">Accessibility</span><span class="tag">Website redesign</span></div>
+          </a>
+
+        </div>
+      </section>
+
+      <section class="get-in-touch reveal">
+        <p class="section-label">Get in touch</p>
+        <p class="get-in-touch__lead">I’m looking for a full-time product management role where I can work closely with engineering and customers and take responsibility for adoption, retention, and revenue—not just delivery.</p>
+        <a href="mailto:hello@ahrdn.com" class="btn btn--primary">Get in touch</a>
+        <p class="get-in-touch__more">Have a web project in mind? I also take on a limited number of independent projects.</p>
+        <a href="work-with-me.html" class="btn">Work with me</a>
+      </section>
+
+      <footer class="site-footer">
+        <div class="site-footer__grid">
+          <div class="site-footer__col">
+            <p class="footer-name">Anika Harden</p>
+            <p>Product manager with a front-end development background, based in Washington, DC.</p>
+          </div>
+          <div class="site-footer__col">
+            <p class="footer-label">Pages</p>
+            <nav aria-label="Footer navigation">
+              <a href="index.html">Work</a>
+              <a href="about.html">About</a>
+              <a href="work-with-me.html">Work with me</a>
+            </nav>
+          </div>
+          <div class="site-footer__col">
+            <p class="footer-label">Connect</p>
+            <nav aria-label="External links">
+              <a href="mailto:hello@ahrdn.com" class="footer-external">Email</a>
+              <a href="https://www.linkedin.com/in/anikaharden" class="footer-external" rel="noopener">LinkedIn</a>
+            </nav>
+          </div>
+        </div>
+        <div class="site-footer__bottom">
+          <span>Built with plain HTML + CSS</span>
+          <span>&copy; 2026 Anika Harden</span>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Back to top">&uarr;</button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,743 @@
+/* ============================================
+   Anika Harden — ahrdn.com
+   One stylesheet. Design tokens up top; change
+   the identity here and it changes everywhere.
+   Type: Newsreader + Libre Franklin
+   All color pairs meet WCAG AA (most meet AAA).
+   Dark theme is parked in css/_dark-theme-parked.css.
+   ============================================ */
+
+/* --- Fonts: self-hosted, SIL Open Font License (see /fonts) --- */
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 200 800; font-display: swap;
+  src: url('../fonts/newsreader-latin-opsz-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: italic; font-weight: 200 800; font-display: swap;
+  src: url('../fonts/newsreader-latin-opsz-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Libre Franklin'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('../fonts/libre-franklin-latin-wght-normal.woff2') format('woff2');
+}
+
+/* --- Tokens --- */
+:root {
+  --serif: 'Newsreader', Georgia, serif;
+  --sans: 'Libre Franklin', system-ui, sans-serif;
+
+  --tx-xs: 0.8125rem;   /* 13px — smallest text on the site */
+  --tx-sm: 0.875rem;    /* 14px */
+  --tx-base: 1.0625rem; /* 17px */
+  --tx-md: 1.1875rem;   /* 19px */
+
+  --s1: 0.5rem;
+  --s2: 1rem;
+  --s3: 1.5rem;
+  --s4: 2rem;
+  --s5: 3rem;
+  --s6: 4.5rem;
+
+  --measure: 680px;
+
+  /* Light: ivory / ink / evergreen */
+  --paper: #F7F4EC;
+  --paper-2: #F0EBDD;
+  --ink: #211E1A;
+  --ink-soft: #56514A;
+  --slate: #5A6472;
+  --accent: #205C40;
+  --accent-ink: #F7F4EC;    /* text on accent backgrounds */
+  --rule: #D8D1C0;
+  --rule-strong: #211E1A;
+}
+
+
+/* --- Base --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-size: var(--tx-base);
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  position: relative;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 18px; font-size: var(--tx-sm); font-weight: 500;
+}
+.skip-link:focus { left: 0; }
+
+.container { max-width: var(--measure); margin: 0 auto; padding: 0 24px; }
+
+
+/* --- Masthead --- */
+.masthead-wrap {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--paper);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.masthead-wrap.scrolled { box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07); }
+
+/* The masthead's double rule is drawn with two pseudo-elements (same look as a
+   3px border plus a 1px line) so the homepage can draw them in on arrival. */
+.masthead {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 26px 0 16px;
+  position: relative;
+}
+.masthead::before, .masthead::after {
+  content: ''; position: absolute; left: 0; right: 0;
+  background: var(--rule-strong); transform-origin: center;
+}
+.masthead::before { bottom: 0; height: 3px; }
+.masthead::after { bottom: -4px; height: 1px; }
+.masthead__name {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 500;
+  color: var(--ink); letter-spacing: 0.01em;
+}
+.masthead__name:hover { text-decoration: none; color: var(--ink); }
+
+/* Wordmark: ANIKA HARDEN at the top of the page; on scroll the letters
+   that aren't in the domain fold away, leaving AHRDN. */
+.wordmark {
+  font-size: 1.2rem; letter-spacing: 0.14em; text-transform: uppercase;
+  white-space: nowrap; display: inline-flex; align-items: baseline;
+}
+.wordmark .drop {
+  display: inline-grid; grid-template-columns: 1fr;
+  transition: grid-template-columns 0.45s ease, opacity 0.3s ease;
+}
+.wordmark .drop > span { overflow: hidden; min-width: 0; }
+.compact .wordmark .drop { grid-template-columns: 0fr; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .wordmark .drop { transition: none; } }
+@media (max-width: 620px) { .wordmark { font-size: 1.05rem; } }
+.masthead__links {
+  display: flex; gap: 26px; align-items: center;
+  list-style: none; font-size: var(--tx-xs); font-weight: 500;
+}
+.masthead__links a { color: var(--ink-soft); }
+.masthead__links a:hover { color: var(--accent); text-decoration: none; }
+.masthead__links a.active {
+  color: var(--accent);
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px;
+}
+.masthead__links a.nav-cta { color: var(--ink); font-weight: 600; }
+.masthead__links a.nav-cta:hover { color: var(--accent); }
+
+
+/* Mobile nav */
+.nav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  padding: var(--s1); color: var(--ink);
+}
+.nav-toggle svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+@media (max-width: 620px) {
+  .nav-toggle { display: block; }
+  .masthead { align-items: center; }
+  .masthead__links {
+    display: none; position: absolute; top: calc(100% + 5px); left: 0; right: 0;
+    flex-direction: column; align-items: flex-start;
+    background: var(--paper); padding: var(--s3) 0;
+    border-bottom: 1px solid var(--rule); gap: var(--s2); z-index: 10;
+  }
+  .masthead__links.open { display: flex; }
+}
+
+/* --- Status banner: sits inside the sticky masthead, so it stays
+   on screen until it is dismissed --- */
+.status-banner {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: var(--tx-sm); text-align: center;
+  padding: 9px 48px;
+  position: relative;
+  max-height: 80px;
+  transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+.status-banner a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.status-banner__close {
+  position: absolute; right: var(--s2); top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--ink-soft); cursor: pointer;
+  font-size: 1rem; opacity: 0.7; padding: 4px 8px;
+}
+.status-banner__close:hover { opacity: 1; }
+.status-banner.dismissed { max-height: 0; padding: 0; opacity: 0; overflow: hidden; border: none; }
+html.banner-dismissed .status-banner { display: none; }
+
+/* --- Typography --- */
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.15; color: var(--ink); font-optical-sizing: auto; }
+p { margin-bottom: var(--s2); }
+p:last-child { margin-bottom: 0; }
+
+/* Section label: italic serif over a short accent rule */
+.section-label {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: 1.3rem; color: var(--ink); margin-bottom: var(--s3);
+}
+.section-label::after {
+  content: ''; display: block; width: 44px; height: 2px;
+  background: var(--accent); margin-top: 10px;
+}
+
+/* --- Hero (homepage) --- */
+.hero { padding: var(--s6) 0 var(--s5); }
+.hero__kicker {
+  font-family: var(--serif); font-style: italic; font-size: 1.2rem;
+  color: var(--accent); margin-bottom: var(--s2);
+}
+.hero h1 {
+  font-size: clamp(2.4rem, 6.5vw, 3.4rem);
+  letter-spacing: -0.015em; max-width: 620px; margin-bottom: var(--s3);
+}
+.hero__intro { font-size: var(--tx-md); color: var(--ink-soft); max-width: 540px; margin-bottom: var(--s3); line-height: 1.6; }
+.folio { font-size: var(--tx-xs); font-weight: 500; color: var(--slate); letter-spacing: 0.02em; }
+.folio em { font-family: var(--serif); font-style: italic; font-size: 0.9375rem; color: var(--ink); letter-spacing: 0; }
+
+/* --- Agate: stats set as a rule-bounded box score --- */
+.agate {
+  display: flex; flex-wrap: wrap;
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: var(--s6);
+}
+.agate__stat { flex: 1 1 130px; padding: 18px 18px 20px 0; }
+.agate__stat + .agate__stat { padding-left: 24px; border-left: 1px solid var(--rule); }
+.agate__value {
+  font-family: var(--serif); font-size: 1.8rem; font-weight: 500;
+  color: var(--ink); display: block; line-height: 1.25;
+  font-feature-settings: 'onum' 1;
+}
+.agate__label { font-size: var(--tx-xs); color: var(--slate); letter-spacing: 0.02em; }
+@media (max-width: 560px) {
+  .agate { flex-direction: column; }
+  .agate__stat + .agate__stat { padding-left: 0; border-left: none; border-top: 1px solid var(--rule); }
+}
+
+/* --- Story listings (homepage projects) --- */
+.stories { margin-bottom: var(--s2); }
+.story { display: block; padding: 30px 0; border-bottom: 1px solid var(--rule); color: inherit; }
+.story:hover { text-decoration: none; }
+.story__kicker {
+  font-family: var(--serif); font-style: italic; font-size: 1rem;
+  color: var(--accent); margin-bottom: 4px;
+}
+.story__title {
+  font-size: 1.75rem; letter-spacing: -0.01em;
+  margin-bottom: var(--s1); transition: color 0.15s ease;
+}
+.story:hover .story__title { color: var(--accent); }
+.story__desc { font-size: 0.9688rem; color: var(--ink-soft); max-width: 560px; margin-bottom: var(--s1); }
+.story__slug { font-size: var(--tx-xs); color: var(--slate); letter-spacing: 0.02em; }
+
+/* Tags: square-ruled section markers, not pills */
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.tag {
+  font-size: var(--tx-xs); font-weight: 500; color: var(--ink-soft);
+  padding: 3px 11px; border: 1px solid var(--rule);
+}
+
+/* --- CTA standfirst --- */
+.cta { padding: var(--s5) 0 var(--s6); }
+.cta p {
+  font-family: var(--serif); font-style: italic; font-size: 1.4rem;
+  line-height: 1.45; max-width: 560px; color: var(--ink);
+}
+.cta a { font-style: normal; border-bottom: 1px solid currentColor; }
+.cta a:hover { text-decoration: none; border-bottom-width: 2px; }
+
+/* --- Buttons --- */
+.btn {
+  display: inline-block; font-family: var(--sans);
+  font-size: var(--tx-xs); font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 13px 28px; border: 1px solid var(--ink);
+  color: var(--ink); background: transparent; cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.btn:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+.btn--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn--primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+/* --- Footer --- */
+.site-footer {
+  border-top: 3px solid var(--rule-strong); position: relative;
+  padding: var(--s4) 0 var(--s5);
+}
+.site-footer::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 5px;
+  border-top: 1px solid var(--rule-strong);
+}
+.site-footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: var(--s4); margin-bottom: var(--s4); }
+.site-footer__col p { font-size: var(--tx-sm); color: var(--ink-soft); line-height: 1.6; }
+.footer-name { font-family: var(--serif); font-size: var(--tx-md); color: var(--ink); margin-bottom: var(--s1); }
+.footer-label {
+  font-family: var(--serif); font-style: italic; font-size: 1rem;
+  color: var(--ink); margin-bottom: var(--s1);
+}
+.site-footer__col nav { display: flex; flex-direction: column; gap: var(--s1); }
+.site-footer__col nav a { font-size: var(--tx-sm); color: var(--ink-soft); }
+.site-footer__col nav a:hover { color: var(--accent); }
+.footer-external::after { content: ' \2197'; font-size: 0.7em; opacity: 0.6; }
+.site-footer__bottom {
+  border-top: 1px solid var(--rule); padding-top: var(--s2);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s1);
+  font-size: var(--tx-xs); color: var(--slate);
+}
+@media (max-width: 560px) { .site-footer__grid { grid-template-columns: 1fr; gap: var(--s3); } }
+
+/* --- Back to top --- */
+.back-to-top {
+  position: fixed; bottom: var(--s4); right: var(--s4);
+  width: 42px; height: 42px;
+  background: var(--paper); border: 1px solid var(--ink); color: var(--ink);
+  font-size: var(--tx-sm); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease, background-color 0.2s ease, color 0.2s ease;
+  z-index: 50;
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; }
+.back-to-top:hover { background: var(--ink); color: var(--paper); }
+
+/* --- Reveal (used sparingly) --- */
+/* Hidden only when JS is running, so the page still reads without it */
+.js .reveal { opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.js .reveal.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ============================================
+   Case study pages
+   ============================================ */
+
+.breadcrumb { font-size: var(--tx-xs); color: var(--slate); margin-top: var(--s3); }
+.breadcrumb a { color: var(--slate); }
+.breadcrumb a:hover { color: var(--ink); }
+
+/* Title-card scale on case study heroes */
+.cs-hero { padding: var(--s5) 0; }
+.cs-hero h1 {
+  font-size: clamp(2.5rem, 7vw, 3.9rem);
+  letter-spacing: -0.02em; margin-bottom: var(--s3); max-width: 640px;
+}
+.cs-hero__intro { font-size: var(--tx-md); color: var(--ink-soft); max-width: 560px; line-height: 1.6; }
+
+/* Credits: the magazine fact box (replaces the chip strip) */
+.credits {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  border-top: 1px solid var(--rule-strong); border-bottom: 1px solid var(--rule);
+  margin-bottom: var(--s6);
+}
+.credits__item { padding: 16px 20px 18px 0; }
+.credits__item + .credits__item { padding-left: 20px; border-left: 1px solid var(--rule); }
+.credits__label { font-size: var(--tx-xs); color: var(--slate); display: block; margin-bottom: 2px; }
+.credits__value { font-size: var(--tx-sm); color: var(--ink); font-weight: 500; line-height: 1.45; }
+@media (max-width: 560px) {
+  .credits { grid-template-columns: 1fr; }
+  .credits__item + .credits__item { padding-left: 0; border-left: none; border-top: 1px solid var(--rule); }
+}
+
+.cs-section { padding-bottom: var(--s5); }
+.cs-section + .cs-section { border-top: 1px solid var(--rule); padding-top: var(--s5); }
+.cs-section p { color: var(--ink-soft); max-width: 620px; }
+.cs-section p a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Drop cap on the opening paragraph of each case study */
+.cs-open > .section-label + p::first-letter,
+.cs-open > p:first-child:not(.section-label)::first-letter {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 3.3em; line-height: 0.85;
+  float: left; padding: 0.04em 0.12em 0 0;
+  color: var(--accent);
+}
+
+/* Decisions: typographic subsections, not boxes */
+.decision { margin-top: var(--s4); }
+.decision + .decision { border-top: 1px solid var(--rule); padding-top: var(--s4); }
+.decision h3 {
+  font-style: italic; font-weight: 400; font-size: 1.4rem;
+  margin-bottom: var(--s2);
+}
+.decision h3::before { content: '\2014\00a0'; color: var(--accent); }
+.decision p { font-size: 0.9688rem; }
+
+/* Aside box: bordered sidebar for reflections, notes, "currently" */
+.aside {
+  background: var(--paper-2); border: 1px solid var(--rule);
+  padding: var(--s3) var(--s4); margin-top: var(--s3);
+}
+.aside p { font-size: var(--tx-sm); color: var(--ink-soft); line-height: 1.65; }
+.aside p + p { margin-top: var(--s2); }
+.aside__label {
+  font-family: var(--serif); font-style: italic; font-size: 1.05rem;
+  color: var(--ink); margin-bottom: var(--s1);
+}
+
+/* Next / previous */
+.next-project {
+  border-top: 1px solid var(--rule); padding: var(--s5) 0;
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s3);
+}
+.next-project a { font-family: var(--serif); font-size: var(--tx-md); color: var(--ink); }
+.next-project a:hover { color: var(--accent); text-decoration: none; }
+.next-project__label { font-size: var(--tx-xs); color: var(--slate); display: block; margin-bottom: 4px; }
+
+/* ============================================
+   About + Work-with-me
+   ============================================ */
+
+.page-hero { padding: var(--s6) 0 var(--s5); }
+.page-hero h1 {
+  font-size: clamp(2.3rem, 6vw, 3.1rem);
+  letter-spacing: -0.015em; max-width: 620px; margin-bottom: var(--s2);
+}
+.page-hero__sub { font-size: var(--tx-md); color: var(--ink-soft); max-width: 540px; line-height: 1.6; }
+
+.page-section { padding-bottom: var(--s5); }
+.page-section + .page-section { border-top: 1px solid var(--rule); padding-top: var(--s5); }
+.page-section p { color: var(--ink-soft); max-width: 620px; }
+.page-section p a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Roles / services: editorial subsections (replaces icon chips + numbered cards) */
+.entry { margin-top: var(--s4); }
+.entry + .entry { border-top: 1px solid var(--rule); padding-top: var(--s4); }
+.entry h3, .entry h2 {
+  font-style: italic; font-weight: 400; font-size: 1.4rem;
+  margin-bottom: var(--s1);
+}
+.entry h3::before, .entry h2::before { content: '\2014\00a0'; color: var(--accent); }
+.entry p { font-size: 0.9688rem; }
+
+/* Simple ruled list (other projects) */
+.ruled-list { margin-top: var(--s2); }
+.ruled-list__item {
+  font-size: var(--tx-sm); color: var(--ink-soft);
+  padding: var(--s2) 0; border-bottom: 1px solid var(--rule);
+}
+.ruled-list__item:last-child { border-bottom: none; }
+.ruled-list__name { color: var(--ink); font-weight: 500; }
+
+/* Contact / final CTA */
+.contact-section { border-top: 1px solid var(--rule); padding: var(--s5) 0; text-align: center; }
+.contact-section > p {
+  font-family: var(--serif); font-style: italic; font-size: 1.3rem;
+  color: var(--ink); max-width: 520px; margin: 0 auto var(--s3);
+}
+.contact-buttons { display: flex; justify-content: center; gap: var(--s2); margin-bottom: var(--s3); flex-wrap: wrap; }
+.contact-note { font-size: var(--tx-sm); color: var(--slate); }
+.contact-note a { color: var(--slate); text-decoration: underline; text-underline-offset: 2px; }
+.contact-note a:hover { color: var(--ink); }
+
+/* --- Utility --- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+}
+
+/* ============================================
+   Scrollytelling: Green America, "The hard parts"
+   A sticky diagram changes as each decision reaches
+   the reading line. CSS does all the motion; js/main.js
+   only sets data-step on the stage. Without JS the stage
+   is hidden and the decisions read exactly as before.
+   ============================================ */
+.scrolly { margin-top: var(--s4); }
+.scrolly__stage { display: none; margin: 0; }
+.js .scrolly__stage {
+  display: block;
+  background: var(--paper-2); border: 1px solid var(--rule);
+  padding: 18px 18px 12px;
+}
+.scrolly__caption {
+  display: flex; gap: 12px; align-items: baseline;
+  margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--rule);
+  font-size: var(--tx-xs); color: var(--slate); line-height: 1.4;
+}
+.scrolly__count { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; flex: none; }
+.scrolly__count:empty { display: none; }
+.scrolly__step h3 { transition: color 0.3s ease; }
+.js .scrolly__step.is-active h3 { color: var(--accent); }
+.scrolly__step > p { transition: color 0.3s ease; }
+.js .scrolly__step.is-active > p { color: var(--ink); } /* paragraph-only steps */
+
+/* Desktop: text on the left, stage pinned on the right, wider than the reading column */
+@media (min-width: 1000px) {
+  .js .scrolly {
+    --w: min(1080px, calc(100vw - 64px));
+    width: var(--w); margin-left: calc((100% - var(--w)) / 2);
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    column-gap: var(--s6); align-items: start;
+  }
+  .js .scrolly__steps { grid-column: 1; grid-row: 1; }
+  .js .scrolly__stage {
+    grid-column: 2; grid-row: 1;
+    position: sticky; top: max(calc(var(--mast-h, 90px) + 24px), calc(50vh - 200px));
+  }
+  .js .scrolly__step { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
+  .js .scrolly--short .scrolly__step { min-height: 45vh; } /* one-paragraph steps */
+}
+
+/* Phone and tablet: stage pinned under the masthead, text scrolls beneath it */
+@media (max-width: 999px) {
+  .js .scrolly__stage {
+    position: sticky; top: var(--mast-h, 80px); z-index: 5;
+    margin-bottom: var(--s2); padding: 12px 12px 8px;
+    box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.25);
+  }
+  .js .scrolly__svg { max-height: 32vh; }
+  .js .scrolly__caption { display: none; } /* the heading just below says the same */
+  .js .scrolly--short .scrolly__step { padding-bottom: var(--s4); }
+  .js .scrolly--short .scrolly__steps { padding-bottom: 25vh; } /* time to see the last state */
+}
+
+/* The diagram */
+.scrolly__svg { display: block; width: 100%; height: auto; }
+.scrolly__svg text { font-family: var(--sans); font-size: 12.5px; fill: var(--ink-soft); }
+.scrolly__svg .t-serif { font-family: var(--serif); font-size: 16px; fill: var(--ink); }
+.scrolly__svg .t-sm { font-size: 14.5px; }
+.scrolly__svg .t-italic { font-family: var(--serif); font-style: italic; font-size: 14px; fill: var(--ink-soft); }
+.scrolly__svg .t-head { font-family: var(--serif); font-style: italic; font-size: 15.5px; fill: var(--accent); }
+.scrolly__svg .t-kicker { font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; fill: var(--slate); }
+.scrolly__svg .t-accent { fill: var(--accent); }
+
+.d-frame { transition: opacity 0.5s ease; }
+.d-frame__box { fill: none; stroke: var(--ink); stroke-width: 1; transition: stroke 0.5s ease, stroke-width 0.5s ease; }
+.d-site { transition: opacity 0.5s ease; }
+.d-site__box { fill: var(--paper); stroke: var(--rule); }
+.scrolly__stage--ga[data-step="1"] .d-frame__box { stroke: var(--accent); stroke-width: 2; }
+.scrolly__stage--ga[data-step="5"] .d-frame__box { stroke: var(--slate); stroke-dasharray: 6 5; }
+.scrolly__stage--ga[data-step="5"] .d-site { opacity: 0.45; }
+
+/* Scenes cross-fade: the outgoing one fades first, then the incoming one */
+.scene { opacity: 0; transition: opacity 0.4s ease; }
+[data-step="0"] .scene-0, [data-step="1"] .scene-1, [data-step="2"] .scene-2,
+[data-step="3"] .scene-3, [data-step="4"] .scene-4, [data-step="5"] .scene-5 { opacity: 1; transition: opacity 0.5s ease 0.3s; }
+.scrolly__stage--ga[data-step="2"] .scene-2 { transition-delay: 0.6s; } /* after the maps have moved */
+.scrolly__stage--ga[data-step="3"] .bankcap { opacity: 0.3; }
+[data-step="1"] .scene-1 { transition-delay: 0.6s; } /* after the maps have moved */
+
+/* The maps: dashed (broken) inside the site, then they leave and turn solid */
+.chip { transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.4s ease; }
+.chip rect { fill: var(--paper); stroke: var(--slate); stroke-dasharray: 4 3; transition: fill 0.4s ease 0.4s, stroke 0.4s ease 0.4s; }
+.chip text { font-size: 12px; font-weight: 500; fill: var(--ink); text-anchor: middle; transition: fill 0.4s ease 0.4s; }
+/* Green America: the maps stay inside until step 2, then sit outside, solid */
+.scrolly__stage--ga:is([data-step="2"], [data-step="3"], [data-step="4"], [data-step="5"]) .chip--gardens { transform: translate(152px, -38px); }
+.scrolly__stage--ga:is([data-step="2"], [data-step="3"], [data-step="4"], [data-step="5"]) .chip--bank { transform: translate(256px, 82px); }
+.scrolly__stage--ga:is([data-step="2"], [data-step="3"], [data-step="4"], [data-step="5"]) .chip rect { fill: var(--accent); stroke: var(--accent); stroke-dasharray: none; }
+.scrolly__stage--ga:is([data-step="2"], [data-step="3"], [data-step="4"], [data-step="5"]) .chip text { fill: var(--accent-ink); }
+.scrolly__stage--ga[data-step="3"] .chip--bank { opacity: 0.3; }
+.scrolly__stage--ga:is([data-step="4"], [data-step="5"]) .chip { opacity: 0; }
+.link { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 3 4; }
+
+/* Step 2: fixes tick over, front end in green, back end in slate */
+.tick { fill: var(--rule); transition: fill 0.3s ease; }
+.scrolly__stage--ga[data-step="1"] .tick { fill: var(--accent); }
+.scrolly__stage--ga[data-step="1"] .tick--out { fill: var(--slate); }
+
+/* Step 3: the cost badge and the timeline */
+.pill { fill: var(--ink); }
+.scrolly__svg .pill__text { font-size: 11px; font-weight: 600; fill: var(--paper); text-anchor: middle; }
+.rail { stroke: var(--rule); stroke-width: 2; }
+.dot { fill: var(--accent); }
+.dot--open { fill: var(--paper-2); stroke: var(--accent); stroke-width: 2; }
+
+/* Step 4: outside work shrinks, in-house work grows (illustrative, not to scale) */
+.track { fill: var(--paper); stroke: var(--rule); }
+.bar { transform-box: fill-box; transform-origin: left center; transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.5s; }
+.bar--out { fill: var(--slate); }
+.bar--in { fill: var(--accent); transform: scaleX(0.12); }
+[data-step="4"] .bar--out { transform: scaleX(0.3); }
+[data-step="4"] .bar--in { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly__stage *, .scrolly__step h3 { transition: none !important; }
+}
+
+/* --- Get a Better Bank diagram: the map is the one object that changes --- */
+.mapcard { transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1); }
+.mapcard__bg { fill: var(--paper-2); stroke: var(--rule); }
+.mapcard__grid { stroke: var(--rule); stroke-width: 1; }
+.mapcard__road { fill: none; stroke: var(--rule); stroke-width: 4; stroke-linecap: round; }
+.pin { fill: var(--ink-soft); transition: fill 0.4s ease, opacity 0.4s ease, stroke 0.4s ease; }
+.pin--ghost { opacity: 0; }
+[data-step="1"] .pin--ghost { opacity: 1; fill: var(--paper-2); stroke: var(--slate); stroke-width: 1.2; stroke-dasharray: 2 2; }
+.scrolly__stage--bank[data-step="2"] .pin, .scrolly__stage--bank[data-step="3"] .pin { opacity: 1; fill: var(--accent); stroke: none; transition-delay: 0.6s; }
+.scrolly__stage--bank[data-step="2"] .pin--cu, .scrolly__stage--bank[data-step="3"] .pin--cu { fill: var(--slate); }
+.scrolly__stage--bank[data-step="2"] .mapcard { transform: translate(253.5px, -17px) scale(0.75); }
+.scrolly__stage--bank[data-step="3"] .mapcard { transform: translate(2.3px, -64.2px) scale(1.15); }
+.scrolly__stage--bank[data-step="3"] .d-frame { opacity: 0; }
+.legend--bank { fill: var(--accent); }
+.legend--cu { fill: var(--slate); }
+.win { fill: var(--paper); stroke: var(--ink); }
+.win__bar { stroke: var(--rule); }
+.win__dot { fill: var(--rule); }
+.scrolly__svg .t-big { font-family: var(--serif); font-size: 26px; font-weight: 500; fill: var(--ink); }
+
+/* ============================================
+   Polish layer: page transitions and homepage
+   lead art. Without JS, or with reduce
+   motion on, the site reads and works as before.
+   ============================================ */
+
+/* --- Page-to-page transitions (View Transitions API) ---
+   Where the browser supports it, the project title glides from the
+   homepage card into the case study and back. Elsewhere pages just load. */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+::view-transition-group(*) { animation-duration: 0.5s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.3s; }
+.masthead-wrap { view-transition-name: masthead; }
+.story__title, .cs-hero__project { width: fit-content; }
+.cs-hero__project {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 500;
+  color: var(--accent); line-height: 1.2; margin-bottom: var(--s2);
+}
+
+/* --- Homepage lead art: the two lead stories get a small diagram
+   that plays once as the card scrolls into view --- */
+.story--art { display: grid; grid-template-columns: minmax(0, 1fr) 176px; column-gap: var(--s4); align-items: center; }
+.story__art { background: var(--paper-2); border: 1px solid var(--rule); padding: 10px; }
+.story__art svg { display: block; width: 100%; height: auto; }
+@media (max-width: 620px) {
+  .story--art { grid-template-columns: minmax(0, 1fr); }
+  .story__art { order: -1; margin-bottom: var(--s2); }
+  .story__art svg { max-height: 120px; }
+}
+/* Finished state is the default, so without JS the art shows its end frame */
+.th-frame { fill: none; stroke: var(--ink); stroke-width: 1; }
+.th-site { fill: var(--paper); stroke: var(--rule); }
+.th-line { fill: var(--rule); }
+.th-move { transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.25s; }
+.th-move--a { transform: translate(124px, 36px); }
+.th-move--b { transform: translate(76px, -18px); }
+.th-chip { fill: var(--accent); stroke: var(--accent); transition: fill 0.4s ease 0.9s, stroke 0.4s ease 0.9s; }
+.th-link { fill: none; stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 2 3; transition: opacity 0.4s ease 1.1s; }
+.th-old { opacity: 0; transition: opacity 0.5s ease 0.3s; }
+.th-window { transition: opacity 0.5s ease 0.5s; }
+.th-win { fill: var(--paper); stroke: var(--ink); }
+.th-bar { stroke: var(--rule); }
+.th-dot { fill: var(--rule); }
+.th-card { transform: translate(27.9px, -13.5px) scale(1.45); transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1) 0.3s; }
+.th-map { fill: var(--paper-2); stroke: var(--rule); }
+.th-pin { fill: var(--accent); transition: fill 0.4s ease 1.1s, opacity 0.4s ease 1.1s; }
+.th-pin--cu { fill: var(--slate); }
+.js .story__art:not(.is-played) .th-move { transform: none; }
+.js .story__art:not(.is-played) .th-chip { fill: var(--paper); stroke: var(--slate); stroke-dasharray: 3 2; }
+.js .story__art:not(.is-played) .th-link { opacity: 0; }
+.js .story__art:not(.is-played) .th-old { opacity: 1; }
+.js .story__art:not(.is-played) .th-window { opacity: 0; }
+.js .story__art:not(.is-played) .th-card { transform: none; }
+.js .story__art:not(.is-played) .th-pin { fill: var(--ink-soft); }
+.js .story__art:not(.is-played) .th-pin--ghost { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .story__art * { transition: none !important; }
+}
+
+/* --- Screenshots: set like magazine figures, in the same frame as the diagrams --- */
+.shot {
+  margin: var(--s4) 0; padding: 14px 14px 10px;
+  background: var(--paper-2); border: 1px solid var(--rule);
+}
+.shot img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); background: #fff; }
+.shot figcaption {
+  margin-top: 10px; font-family: var(--serif); font-style: italic;
+  font-size: 0.95rem; line-height: 1.45; color: var(--ink-soft);
+}
+.shot figcaption a { color: var(--ink-soft); text-decoration: underline; text-underline-offset: 2px; }
+.shot figcaption a:hover { color: var(--accent); }
+.shot__imgs { display: grid; grid-template-columns: minmax(0, 3.4fr) minmax(0, 1fr); gap: 14px; align-items: end; }
+.shot__imgs--even { grid-template-columns: 1fr 1fr; align-items: start; }
+@media (min-width: 1000px) {
+  .shot--wide { --w: min(880px, calc(100vw - 64px)); width: var(--w); margin-left: calc((100% - var(--w)) / 2); }
+}
+@media (max-width: 620px) {
+  .shot__imgs, .shot__imgs--even { grid-template-columns: 1fr; }
+  .shot .shot__phone { width: 60%; justify-self: center; }
+}
+
+/* --- About page portrait: one photo, in the same frame as the figures --- */
+.portrait { margin: 0; padding: 8px; background: var(--paper-2); border: 1px solid var(--rule); }
+.portrait img { display: block; width: 100%; height: auto; }
+.page-hero--portrait { display: grid; grid-template-columns: minmax(0, 1fr) 188px; column-gap: var(--s4); align-items: start; }
+.page-hero--portrait .portrait { grid-column: 2; grid-row: 1; }
+.page-hero--portrait .page-hero__text { grid-column: 1; grid-row: 1; }
+.page-hero--portrait h1 { font-size: clamp(2.1rem, 5vw, 2.6rem); }
+/* Phones: headline first, then the photo at full width, cropped square from the top */
+@media (max-width: 620px) {
+  .page-hero--portrait { grid-template-columns: minmax(0, 1fr); }
+  .page-hero--portrait .page-hero__text { grid-row: 1; }
+  .page-hero--portrait .portrait { grid-column: 1; grid-row: 2; width: 100%; margin-top: var(--s4); }
+  .page-hero--portrait .portrait img { aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 0%; }
+}
+
+/* --- Homepage arrival: the masthead rules draw out from the centre, the dateline
+   types in, then a green pen line sweeps under "earn their keep." Plays once per
+   visit (the .intro class is set in index.html's head), never with reduce motion.
+   Without it, the page simply shows its finished state. --- */
+.hero .folio { display: inline-block; }
+.mark {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat; background-position: 0 90%; background-size: 100% 0.075em;
+}
+@keyframes rule-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes dateline-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes mark-sweep { from { background-size: 0% 0.075em; } to { background-size: 100% 0.075em; } }
+.intro .masthead::before { animation: rule-draw 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s both; }
+.intro .masthead::after { animation: rule-draw 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.22s both; }
+.intro .hero .folio { animation: dateline-type 0.45s steps(14, end) 0.6s both; }
+.intro .hero .mark { animation: mark-sweep 0.8s cubic-bezier(0.65, 0, 0.25, 1) 1.1s both; }
+@media (prefers-reduced-motion: reduce) {
+  .intro .masthead::before, .intro .masthead::after, .intro .hero .folio, .intro .hero .mark { animation: none; }
+}
+
+/* --- Homepage closing section: job search first, independent work second --- */
+.get-in-touch { padding: var(--s2) 0 var(--s6); }
+.get-in-touch__lead {
+  font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.45;
+  color: var(--ink); max-width: 580px; margin-bottom: var(--s3);
+}
+.get-in-touch__more { color: var(--ink-soft); max-width: 580px; margin: var(--s5) 0 var(--s2); padding-top: var(--s3); border-top: 1px solid var(--rule); }
+
+/* Five- or six-item facts box: rows of three on desktop */
+@media (min-width: 561px) {
+  .credits--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .credits--three .credits__item:nth-child(3n+1) { padding-left: 0; border-left: none; }
+  .credits--three .credits__item:nth-child(n+4) { border-top: 1px solid var(--rule); }
+}
+
+/* Small source/period note under a section */
+.cs-section p.cs-note { font-size: var(--tx-xs); color: var(--slate); margin-top: var(--s3); }
+
+/* Green America scroll section: intro and label above the steps */
+.scrolly__intro { padding-bottom: var(--s4); }
+.scrolly__label { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--rule); }
+@media (min-width: 1000px) { .js .scrolly__intro { min-height: 60vh; } }
+.cs-section .cs-list { margin: 0 0 var(--s2) 1.2em; color: var(--ink-soft); font-size: 0.9688rem; }
+.cs-section .cs-list li { margin-bottom: 6px; padding-left: 4px; }
+.scrolly__step--ruled { border-top: 1px solid var(--rule); padding-top: var(--s4); margin-top: var(--s4); }
+
+/* --- 404 page: the homepage's hero scale, two ways out, and the case
+   studies as a way back in. Links in 404.html are root-relative on purpose:
+   GitHub Pages serves this file at any missing address, at any depth. --- */
+.notfound { padding-bottom: var(--s5); }
+.notfound h1 { font-size: clamp(2.4rem, 6.5vw, 3.4rem); letter-spacing: -0.015em; max-width: 620px; }
+.notfound__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: var(--s3); }
+.notfound__work .story { padding: 22px 0; }
+.notfound__work .story__title { font-size: 1.5rem; margin-bottom: 4px; }
+.notfound__work .story p.story__kicker { color: var(--accent); }
+.notfound__work .story__desc { margin-bottom: 0; }
+.notfound__help { font-size: var(--tx-sm, 0.9375rem); color: var(--ink-soft); margin-top: var(--s3); }
